@@ -1,47 +1,41 @@
 import React, { useEffect } from 'react';
-import BenefitsSection from '../components/BenefitsSection';
-import CoreValuesSection from '../components/CoreValuesSection';
-import Footer from '../components/Footer';
-import HeroSlider from '../components/HeroSlider';
-import JoinCommunitySection from '../components/JoinCommunitySection';
-import MainContent from '../components/MainContent';
-import MissionVisionSection from '../components/MissionVisionSection';
 import Navigation from '../components/Navigation';
+import HeroSection from '../components/HeroSection';
 import OurStorySection from '../components/OurStorySection';
+import MissionVisionSection from '../components/MissionVisionSection';
+import CoreValuesSection from '../components/CoreValuesSection';
+import BenefitsSection from '../components/BenefitsSection';
+import PodcastSection from '../components/PodcastSection';
 import BlogsSection from '../components/BlogsSection';
 import StoriesSection from '../components/StoriesSection';
+import JoinCommunitySection from '../components/JoinCommunitySection';
+import Footer from '../components/Footer';
 
 const HomePage = () => {
-  // Handle scrolling to hash anchor when navigating from other pages
+  // Handle scrolling to hash anchor when navigating from other pages or links
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
-      // Small delay to ensure the page has rendered
       setTimeout(() => {
         const element = document.querySelector(hash);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      }, 100);
+      }, 150);
     }
   }, []);
 
   return (
-    <div style={{ margin: 0, padding: 0 }}>
+    <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-pink-100 selection:text-pink-600">
       <Navigation />
-      <HeroSlider />
+      <HeroSection />
       <OurStorySection />
-      {/* <MainContent /> */}
       <MissionVisionSection />
       <CoreValuesSection />
       <BenefitsSection />
-      
-      {/* Blogs Section */}
+      <PodcastSection />
       <BlogsSection />
-
-      {/* Stories Section */}
       <StoriesSection />
-
       <JoinCommunitySection />
       <Footer />
     </div>

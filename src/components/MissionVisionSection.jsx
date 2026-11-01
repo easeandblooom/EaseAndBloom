@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { FiTarget } from "react-icons/fi";
-import { FiEye } from "react-icons/fi";
+import { FiTarget, FiEye } from "react-icons/fi";
+
 export default function MissionVisionSection() {
   const sectionRef = useRef(null)
   const [visible, setVisible] = useState(false)
@@ -19,44 +19,61 @@ export default function MissionVisionSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className={`py-20 px-6 bg-gray-50 transition-all duration-700 ${visible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+    <section 
+      ref={sectionRef} 
+      className={`py-20 md:py-24 px-6 bg-gray-50/80 transition-all duration-700 ${
+        visible ? 'animate-fade-in-up' : 'opacity-0'
+      }`}
+    >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <span className="text-sm font-medium text-purple-500 tracking-wider uppercase mb-4 block">Our Purpose</span>
-          <h2 className="text-5xl md:text-6xl font-light text-gray-900">Mission & Vision</h2>
+          <span className="text-xs font-semibold text-pink-500 tracking-[0.16em] uppercase block mb-3">
+            Our purpose
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900">
+            Mission &amp; Vision
+          </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
-          <div className="text-start md:text-left flex">
-            <div className="text-pink-500 text-2xl mr-6 p-3 bg-white rounded-xl shadow h-fit"><FiEye /></div>
-            <div className="flex flex-col items-start justify-start mb-4">
-              
-              <h3 className="text-2xl font-light text-gray-900 text-center my-4">Our Vision</h3>
-              <p className="text-gray-600 text-lg font-light leading-relaxed">
-              To create a <span className="text-pink-500">safe and empowering community</span> for women to freely discuss menstrual health, while providing <span className="font-bold">sustainable access to period care</span> for underserved communities.
-            </p>
+        <div className="grid md:grid-cols-2 gap-10 md:gap-14 mb-16">
+          {/* Vision */}
+          <div className="flex gap-5 items-start">
+            <div className="text-pink-500 text-2xl p-3.5 bg-white rounded-2xl shadow-sm border border-gray-100 flex-shrink-0">
+              <FiEye />
             </div>
-            
+            <div>
+              <h3 className="text-xl md:text-2xl font-medium text-gray-900 mb-2">
+                Our Vision
+              </h3>
+              <p className="text-gray-600 text-base md:text-lg font-light leading-relaxed">
+                To create a <span className="text-pink-500 font-medium">safe and empowering community</span> for women to freely discuss menstrual health, while providing <strong className="font-medium text-gray-900">sustainable access to period care</strong> for underserved communities.
+              </p>
+            </div>
           </div>
 
-          <div className="text-start md:text-left flex">
-            <div className="text-purple-500 text-2xl mr-6 p-3 bg-white rounded-xl shadow h-fit"><FiTarget /></div>
-            <div className="flex flex-col items-start justify-start mb-4">
-              
-              <h3 className="text-2xl font-light text-gray-900 text-center my-4">Our Mission</h3>
-              <p className="text-gray-600 text-lg font-light leading-relaxed">
-              To <span className="text-purple-600">end period shame globally</span> and ensure no woman or girl ever feels alone, unworthy, or silenced during her menstrual journey.
-            </p>
+          {/* Mission */}
+          <div className="flex gap-5 items-start">
+            <div className="text-purple-600 text-2xl p-3.5 bg-white rounded-2xl shadow-sm border border-gray-100 flex-shrink-0">
+              <FiTarget />
             </div>
-            
+            <div>
+              <h3 className="text-xl md:text-2xl font-medium text-gray-900 mb-2">
+                Our Mission
+              </h3>
+              <p className="text-gray-600 text-base md:text-lg font-light leading-relaxed">
+                To <span className="text-purple-600 font-medium">end period shame globally</span> and ensure no woman or girl ever feels alone, unworthy, or silenced during her menstrual journey.
+              </p>
+            </div>
           </div>
         </div>
 
-        <hr className="bg-gray-100 border-0 h-px my-5" />
-        <div className="text-center">
-          <p className="text-4xl md:text-6xl font-light text-gray-700">
-            We believe that <span className="text-transparent bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text font-medium">no woman should suffer in
-            silence</span>.
+        <div className="text-center pt-8 border-t border-gray-200/70">
+          <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-slate-700 leading-tight max-w-3xl mx-auto">
+            We believe that{" "}
+            <span className="text-transparent bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text font-normal">
+              no woman should suffer in silence
+            </span>
+            .
           </p>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, User, Eye, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import BlogDetailModal from './BlogDetailModal';
 import LoadingSpinner from './LoadingSpinner';
 import { blogsAPI } from '../services/api';
@@ -11,90 +11,23 @@ const BlogsSection = () => {
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Dummy blog data as fallback
-  const dummyBlogs = [
-    {
-      _id: 1,
-      title: "Understanding Your Menstrual Cycle",
-      excerpt: "A comprehensive guide to understanding the phases of your menstrual cycle and what they mean for your health and wellbeing.",
-      author: "Dr. Sarah Johnson",
-      publishedAt: "2024-01-15",
-      publishDate: "2024-01-15",
-      views: 1250,
-      categories: ["Mental Health"],
-      featuredImage: { url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=250&fit=crop" },
-      content: "Your menstrual cycle is more than just your period. It's a complex interplay of hormones that affects your entire body..."
-    },
-    {
-      _id: 2,
-      title: "Breaking the Silence: Period Stigma",
-      excerpt: "Exploring how period stigma affects women globally and what we can do to create a more supportive environment.",
-      author: "Maria Rodriguez",
-      publishedAt: "2024-01-12",
-      publishDate: "2024-01-12",
-      views: 980,
-      categories: ["Support"],
-      featuredImage: { url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=250&fit=crop" },
-      content: "Period stigma is a global issue that affects millions of women and girls worldwide. It's time we break the silence..."
-    },
-    {
-      _id: 3,
-      title: "Self-Care During Your Period",
-      excerpt: "Practical tips and gentle practices to help you feel your best during your menstrual cycle.",
-      author: "Emma Thompson",
-      publishedAt: "2024-01-10",
-      publishDate: "2024-01-10",
-      views: 2100,
-      categories: ["Self-Care"],
-      featuredImage: { url: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=250&fit=crop" },
-      content: "Self-care during your period isn't just about comfort—it's about honoring your body's natural rhythms..."
-    },
-    {
-      _id: 4,
-      title: "Nutrition and Your Cycle",
-      excerpt: "How different foods can support your hormonal health throughout your menstrual cycle.",
-      author: "Dr. Lisa Chen",
-      publishedAt: "2024-01-08",
-      publishDate: "2024-01-08",
-      views: 1650,
-      categories: ["Wellness"],
-      featuredImage: { url: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=250&fit=crop" },
-      content: "What you eat can significantly impact how you feel throughout your menstrual cycle. Let's explore the connection..."
-    },
-    {
-      _id: 5,
-      title: "Building Supportive Communities",
-      excerpt: "The importance of creating safe spaces where women can share their experiences and support each other.",
-      author: "Jennifer Adams",
-      publishedAt: "2024-01-05",
-      publishDate: "2024-01-05",
-      views: 890,
-      categories: ["Support"],
-      featuredImage: { url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=250&fit=crop" },
-      content: "Community support is crucial for women's health and wellbeing. Here's how we can build stronger connections..."
-    },
-    {
-      _id: 6,
-      title: "Mental Health and Menstruation",
-      excerpt: "Understanding the connection between your mental health and menstrual cycle, and strategies for managing mood changes.",
-      author: "Dr. Rachel Green",
-      publishedAt: "2024-01-03",
-      publishDate: "2024-01-03",
-      views: 1450,
-      categories: ["Mental Health"],
-      featuredImage: { url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&h=250&fit=crop" },
-      content: "The relationship between mental health and menstruation is complex and deeply personal. Let's explore this connection..."
-    }
-  ];
+  // Fallback blog data matching the updated preview
+  const fallbackBlog = {
+    _id: "preview-1",
+    title: "The Letters We Wish Our Mothers Wrote Us About Periods",
+    excerpt: "Dear Bloomers, if no one told you this before, your period is not something to hide. It's not dirty. It's not shameful. It's your body's way of...",
+    author: "Ndidi",
+    publishedAt: "2025-11-04",
+    categories: ["Wellness"],
+    content: "Dear Bloomers, if no one told you this before, your period is not something to hide. It's not dirty. It's not shameful. It's your body's way of communicating with you, reminding you of your strength, and honoring your health."
+  };
 
   useEffect(() => {
     fetchBlogs();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchBlogs = async () => {
     try {
-      console.log('🔄 Attempting to fetch blogs from backend...');
-      // Try to fetch from backend first with content included
       const { data } = await blogsAPI.getAll({
         limit: 6,
         status: 'published',
@@ -102,34 +35,20 @@ const BlogsSection = () => {
         includeContent: 'true'
       });
 
-      console.log('📡 Response received:', data);
-
-      if (data.success && data.data.blogs.length > 0) {
-        console.log('✅ Successfully fetched blogs from backend:', data.data.blogs.length);
-        
-        // Transform backend data to match frontend expectations
+      if (data?.success && data.data.blogs.length > 0) {
         const transformedBlogs = data.data.blogs.map(blog => ({
           ...blog,
-          // Generate excerpt from content (remove HTML tags and limit length)
-          excerpt: blog.content ? blog.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...' : 'No excerpt available',
-          // Use publishDate instead of publishedAt
-          publishedAt: blog.publishDate,
-          // Ensure views is a number
+          excerpt: blog.content ? blog.content.replace(/<[^>]*>/g, '').substring(0, 160) + '...' : 'No excerpt available',
+          publishedAt: blog.publishDate || blog.publishedAt || blog.createdAt,
           views: blog.views || 0
         }));
         
-        setRecentBlog(transformedBlogs[0]); // Most recent blog
+        setRecentBlog(transformedBlogs[0]);
       } else {
-        console.log('⚠️ No blogs found in backend, using dummy data');
-        // Fallback to dummy data
-        setRecentBlog(dummyBlogs[0]); // First one as recent
+        setRecentBlog(fallbackBlog);
       }
-    } catch (error) {
-      console.error('❌ Failed to fetch blogs from backend:', error.message);
-      console.error('❌ Error details:', error);
-      console.log('🔄 Falling back to dummy data');
-      // Fallback to dummy data
-      setRecentBlog(dummyBlogs[0]);
+    } catch {
+      setRecentBlog(fallbackBlog);
     } finally {
       setIsLoading(false);
     }
@@ -146,7 +65,10 @@ const BlogsSection = () => {
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    if (!dateString) return 'Recent';
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return 'Recent';
+    return d.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
       year: 'numeric'
@@ -155,9 +77,9 @@ const BlogsSection = () => {
 
   if (isLoading) {
     return (
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center h-64">
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex items-center justify-center h-48">
             <LoadingSpinner size="default" />
           </div>
         </div>
@@ -165,90 +87,71 @@ const BlogsSection = () => {
     );
   }
 
+  const blog = recentBlog || fallbackBlog;
+
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 md:py-24 px-6 bg-white">
+      <div className="max-w-5xl mx-auto text-center">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="mb-12">
+          <span className="text-xs font-semibold text-pink-500 tracking-[0.16em] uppercase block mb-3">
+            From the blog
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 mb-4">
             Latest from Our Blog
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 font-light max-w-2xl mx-auto">
             Insights, tips, and stories to support your mental wellness journey
           </p>
         </div>
 
-        {/* Featured Blog - Compact Design */}
-        {recentBlog && (
-          <div className="mb-12">
-            <div className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
-              <div className="flex flex-col sm:flex-row">
-                {/* Compact Image */}
-                <div className="sm:w-2/5 relative overflow-hidden">
-                  <div className="aspect-[4/3] sm:h-full">
-                    <img
-                      src={recentBlog.featuredImage?.url || recentBlog.featuredImage || recentBlog.image}
-                      alt={recentBlog.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <span className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
-                        {recentBlog.categories?.[0] || 'Featured'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Content */}
-                <div className="sm:w-3/5 p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors">
-                    {recentBlog.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {recentBlog.excerpt}
-                  </p>
-                  
-                  <div className="flex items-center gap-3 text-xs text-gray-500 mb-4">
-                    <div className="flex items-center">
-                      <User className="h-3.5 w-3.5 mr-1" />
-                      <span>{recentBlog.author}</span>
-                    </div>
-                    <span>•</span>
-                    <div className="flex items-center">
-                      <Calendar className="h-3.5 w-3.5 mr-1" />
-                      <span>{formatDate(recentBlog.publishedAt || recentBlog.publishDate || recentBlog.createdAt)}</span>
-                    </div>
-                    <span>•</span>
-                    <div className="flex items-center">
-                      <Eye className="h-3.5 w-3.5 mr-1" />
-                      <span>{recentBlog.views?.toLocaleString() || '0'} views</span>
-                    </div>
-                  </div>
-                  
-                  <button
-                    onClick={() => handleBlogClick(recentBlog)}
-                    className="inline-flex items-center text-sm font-semibold text-pink-600 hover:text-pink-700 transition-colors group/btn"
-                  >
-                    Read Article
-                    <ArrowRight className="h-4 w-4 ml-1 transition-transform group-hover/btn:translate-x-1" />
-                  </button>
-                </div>
+        {/* Featured Post Card (Text-first, no thumbnail to honor 2-photo rule) */}
+        {blog && (
+          <article className="relative bg-white border border-gray-100 rounded-3xl p-6 sm:p-10 shadow-[0_20px_50px_-38px_rgba(15,23,42,0.4)] text-left max-w-4xl mx-auto overflow-hidden transition-all duration-300 hover:shadow-lg">
+            {/* Left Accent Gradient Strip */}
+            <div className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-pink-500 to-purple-600" />
+
+            <div className="pl-3 sm:pl-4">
+              <span className="inline-block bg-pink-50 text-pink-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">
+                {blog.categories?.[0] || 'Wellness'}
+              </span>
+
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 mb-3 hover:text-pink-600 transition-colors cursor-pointer" onClick={() => handleBlogClick(blog)}>
+                {blog.title}
+              </h3>
+
+              <p className="text-gray-600 text-base md:text-lg font-light leading-relaxed mb-4">
+                {blog.excerpt}
+              </p>
+
+              <div className="text-xs sm:text-sm text-gray-500 mb-4">
+                By {blog.author || 'Ndidi'} · {formatDate(blog.publishedAt)}
               </div>
-              
+
+              <div>
+                <button
+                  onClick={() => handleBlogClick(blog)}
+                  className="inline-flex items-center gap-1.5 min-h-[44px] text-pink-600 hover:text-purple-600 font-semibold text-base transition-colors group"
+                >
+                  Read Article
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </button>
+              </div>
             </div>
-            <div className="flex justify-center mt-6">
-              <Link
-                to="/blog"
-                className="group inline-flex items-center px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
-              >
-                View All Blogs
-                <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </div>
+          </article>
         )}
 
-        {/* Blog Detail Modal */}
+        {/* View All Blogs Button */}
+        <div className="mt-10 flex justify-center">
+          <Link
+            to="/blog"
+            className="inline-flex items-center justify-center min-h-[48px] px-8 py-3 rounded-full font-semibold text-gray-800 bg-white border border-gray-200 hover:border-pink-500 hover:text-pink-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 text-base"
+          >
+            View All Blogs
+          </Link>
+        </div>
+
+        {/* Modal */}
         <BlogDetailModal
           blog={selectedBlog}
           isOpen={isModalOpen}
