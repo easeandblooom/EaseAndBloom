@@ -6,7 +6,8 @@ import Footer from '../components/Footer';
 import StoryCard from '../components/StoryCard';
 import StoriesGridCarousel from '../components/StoriesGridCarousel';
 import StoryDetailModal from '../components/StoryDetailModal';
-import story from '/story.JPG'
+import story from '/story.JPG';
+import { WEB_APP_URL } from '../config/constants';
 
 const OurStory = () => {
   const sectionRef = useRef(null);
@@ -129,21 +130,17 @@ This is our soft place to land. Our circle of care. Our community of truth-telli
               Be part of a community that breaks the silence and creates space for healing.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/#join-community"
-                className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+              <a
+                href={WEB_APP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-center"
               >
                 Join Our Community
-              </Link>
-              <Link
-                to="/waitlist"
-                className="px-8 py-4 bg-white border-2 border-pink-500 text-pink-500 rounded-full font-semibold hover:bg-pink-500 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg"
-              >
-                Join Our Waitlist
-              </Link>
+              </a>
               <Link
                 to="/share-story"
-                className="px-8 py-4 bg-white border-2 border-purple-500 text-purple-500 rounded-full font-semibold hover:bg-purple-500 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg"
+                className="px-8 py-4 bg-white border-2 border-purple-500 text-purple-600 rounded-full font-semibold hover:bg-purple-500 hover:text-white transition-all duration-300 shadow-md hover:shadow-lg text-center"
               >
                 Share Your Story
               </Link>

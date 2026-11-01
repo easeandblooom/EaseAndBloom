@@ -1,4 +1,5 @@
 import React from "react";
+import { FaApple } from "react-icons/fa";
 import { PODCAST_LINKS } from "../config/constants";
 
 export default function PodcastSection() {
@@ -37,19 +38,14 @@ export default function PodcastSection() {
                   Spotify
                 </a>
 
-                {/* Apple Podcasts */}
+                {/* Apple Podcasts with Official Apple Logo */}
                 <a
                   href={PODCAST_LINKS.apple}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 min-h-[46px] px-5 py-2.5 rounded-full font-semibold text-gray-900 bg-white hover:bg-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 text-sm"
+                  className="inline-flex items-center gap-2 min-h-[46px] px-5 py-2.5 rounded-full font-semibold text-gray-900 bg-white hover:bg-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 text-sm"
                 >
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 flex-shrink-0 text-[#872ec4]">
-                    <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v7.02C18.343 21.168 22 17.03 22 12c0-5.523-4.477-10-10-10z" className="hidden" />
-                    <circle cx="12" cy="12" r="10" fill="#f3e8ff" />
-                    <path d="M12 6a6 6 0 0 0-3 11.196V19a1 1 0 0 0 2 0v-1.126A3.992 3.992 0 0 0 12 18a4 4 0 0 0 3.732-2.572A1 1 0 0 0 15 14a1 1 0 0 0-1 1 2 2 0 1 1-4 0V9.874A4 4 0 0 1 12 8a4 4 0 0 1 4 4 1 1 0 1 0 2 0 6 6 0 0 0-6-6z" fill="#9333ea" />
-                    <circle cx="12" cy="13" r="1.5" fill="#9333ea" />
-                  </svg>
+                  <FaApple className="w-5 h-5 flex-shrink-0 text-black mb-0.5" />
                   Apple Podcasts
                 </a>
 

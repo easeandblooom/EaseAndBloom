@@ -7,6 +7,7 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,50 +28,35 @@ export default function Navigation() {
   };
 
   const handlePodcastClick = (e) => {
-    if (location.pathname === "/") {
+    if (isHome) {
       e.preventDefault();
       const el = document.getElementById("podcast");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
+      if (el) el.scrollIntoView({ behavior: "smooth" });
     }
     setMenuOpen(false);
   };
 
-  const isActive = (path) => {
-    if (path === "/") {
-      return location.pathname === "/";
-    }
-    return location.pathname.startsWith(path);
-  };
-
-  const getActiveLinkClass = (path) => {
-    const active = isActive(path);
-    if (active) {
-      return isScrolled
-        ? "text-pink-600 font-semibold relative after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-gradient-to-r after:from-pink-500 after:to-purple-600 after:rounded-full"
-        : "text-white font-semibold relative after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-white after:rounded-full";
-    }
-    return isScrolled
-      ? "text-gray-700 hover:text-pink-600 font-medium"
-      : "text-white/90 hover:text-white font-medium";
-  };
-
-  const isHome = location.pathname === "/";
-  const navBgClass = isScrolled || menuOpen || !isHome
-    ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 text-gray-900"
-    : "bg-transparent text-white";
+  // Solid background active when scrolled, mobile menu is open, or on interior pages
+  const isSolid = isScrolled || menuOpen || !isHome;
 
   return (
-    <header className="sticky top-0 z-50 w-full transition-colors duration-300">
+    <header
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        isHome ? "-mb-[108px]" : ""
+      } ${
+        isSolid
+          ? "bg-white/95 backdrop-blur-md shadow-[0_1px_0_#eef0f3]"
+          : "bg-transparent"
+      }`}
+    >
       {/* Top Announcement Bar */}
-      <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium">
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
+      <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs sm:text-[13px] py-2 px-4 text-center font-medium">
+        <div className="max-w-[1160px] mx-auto flex items-center justify-center gap-1.5 flex-wrap">
           <span>New on the Ease &amp; Bloom pod: honest talks with inspiring women.</span>
           <a
             href={isHome ? "#podcast" : "/#podcast"}
             onClick={handlePodcastClick}
-            className="underline underline-offset-4 font-semibold hover:opacity-90 inline-flex items-center gap-1"
+            className="font-semibold underline underline-offset-4 hover:opacity-90 inline-flex items-center gap-1 cursor-pointer"
           >
             Listen now &rarr;
           </a>
@@ -78,132 +64,135 @@ export default function Navigation() {
       </div>
 
       {/* Main Navbar */}
-      <nav
-        className={`w-full transition-all duration-300 ${navBgClass}`}
-        aria-label="Main"
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-3.5">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2.5 cursor-pointer group">
-              <img
-                src={logo}
-                alt="Ease & Bloom Logo"
-                className="w-9 h-9 sm:w-10 sm:h-10 group-hover:scale-105 transition-transform duration-300"
-              />
-              <span
-                className={`font-semibold text-lg sm:text-xl transition-colors ${
-                  isScrolled || menuOpen || !isHome ? "text-gray-900" : "text-white"
-                }`}
-              >
-                Ease &amp; Bloom
-              </span>
-            </Link>
-
-            {/* Desktop Navigation Links (Under 980px / lg they hide) */}
-            <div className="hidden lg:flex items-center gap-8">
-              <Link
-                to="/our-story"
-                className={`${getActiveLinkClass("/our-story")} text-sm transition-all duration-200`}
-              >
-                Our Story
-              </Link>
-              <Link
-                to="/blog"
-                className={`${getActiveLinkClass("/blog")} text-sm transition-all duration-200`}
-              >
-                Blog
-              </Link>
-              <a
-                href={isHome ? "#podcast" : "/#podcast"}
-                onClick={handlePodcastClick}
-                className={`${
-                  isScrolled || !isHome
-                    ? "text-gray-700 hover:text-pink-600"
-                    : "text-white/90 hover:text-white"
-                } text-sm font-medium transition-all duration-200`}
-              >
-                Podcast
-              </a>
-              <Link
-                to="/share-story"
-                className={`${getActiveLinkClass("/share-story")} text-sm transition-all duration-200`}
-              >
-                Share Your Story
-              </Link>
-
-              {/* Join Our Community Button */}
-              <a
-                href={WEB_APP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`min-h-[42px] px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 ${
-                  isScrolled || !isHome
-                    ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white"
-                    : "bg-white text-gray-900 hover:bg-gray-100"
-                }`}
-              >
-                Join Our Community
-              </a>
-            </div>
-
-            {/* Mobile Menu Button (< 980px / lg) */}
-            <button
-              className={`lg:hidden w-11 h-11 rounded-xl flex items-center justify-center transition-colors ${
-                isScrolled || menuOpen || !isHome
-                  ? "text-gray-800 bg-gray-100 hover:bg-gray-200"
-                  : "text-white bg-white/10 hover:bg-white/20 border border-white/30"
+      <nav className="w-full" aria-label="Main">
+        <div className="max-w-[1160px] mx-auto px-5 sm:px-8 flex items-center justify-between min-h-[68px]">
+          {/* Logo / Brand */}
+          <Link to="/" className="flex items-center gap-2.5 cursor-pointer group flex-shrink-0">
+            <img
+              src={logo}
+              alt="Ease & Bloom Logo"
+              className="w-8 h-8 sm:w-9 sm:h-9 group-hover:scale-105 transition-transform duration-200"
+            />
+            <span
+              className={`font-semibold text-lg sm:text-[18px] transition-colors ${
+                isSolid ? "text-[#0f172a]" : "text-white"
               }`}
-              onClick={handleMenuToggle}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
             >
-              {menuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
+              Ease &amp; Bloom
+            </span>
+          </Link>
+
+          {/* Desktop Nav Links (Hidden under 980px) */}
+          <div className="hidden min-[981px]:flex items-center gap-7 ml-auto mr-4">
+            <Link
+              to="/our-story"
+              className={`text-[15px] font-medium transition-colors ${
+                isSolid
+                  ? "text-[#475569] hover:text-pink-600"
+                  : "text-white/90 hover:text-white"
+              }`}
+            >
+              Our Story
+            </Link>
+            <Link
+              to="/blog"
+              className={`text-[15px] font-medium transition-colors ${
+                isSolid
+                  ? "text-[#475569] hover:text-pink-600"
+                  : "text-white/90 hover:text-white"
+              }`}
+            >
+              Blog
+            </Link>
+            <a
+              href={isHome ? "#podcast" : "/#podcast"}
+              onClick={handlePodcastClick}
+              className={`text-[15px] font-medium transition-colors cursor-pointer ${
+                isSolid
+                  ? "text-[#475569] hover:text-pink-600"
+                  : "text-white/90 hover:text-white"
+              }`}
+            >
+              Podcast
+            </a>
+            <Link
+              to="/share-story"
+              className={`text-[15px] font-medium transition-colors ${
+                isSolid
+                  ? "text-[#475569] hover:text-pink-600"
+                  : "text-white/90 hover:text-white"
+              }`}
+            >
+              Share Your Story
+            </Link>
           </div>
+
+          {/* Desktop Join Our Community Button (Hidden under 980px) */}
+          <a
+            href={WEB_APP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`hidden min-[981px]:inline-flex items-center justify-center min-h-[42px] px-5 py-2 rounded-full text-[14px] font-semibold transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md ${
+              isSolid
+                ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white"
+                : "bg-white text-[#0f172a] hover:bg-white/95"
+            }`}
+          >
+            Join Our Community
+          </a>
+
+          {/* Mobile Menu Button (Shows under 980px) */}
+          <button
+            onClick={handleMenuToggle}
+            className={`min-[981px]:hidden w-[46px] h-[46px] rounded-xl flex items-center justify-center transition-colors ${
+              isSolid
+                ? "border border-[#e2e8f0] bg-white text-[#0f172a]"
+                : "border border-white/50 bg-white/10 text-white"
+            }`}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+              </svg>
+            )}
+          </button>
         </div>
 
-        {/* Mobile Dropdown Menu (< 980px) */}
+        {/* Mobile Dropdown Menu (Under 980px) */}
         {menuOpen && (
-          <div
-            id="mobile-menu"
-            className="lg:hidden bg-white border-t border-gray-100 px-6 py-4 shadow-xl text-gray-900 animate-fade-in-up"
-          >
-            <div className="flex flex-col gap-1">
+          <div className="min-[981px]:hidden bg-white border-t border-[#eef0f3] shadow-xl text-[#0f172a] px-6 py-4 animate-fade-in-up">
+            <div className="flex flex-col">
               <Link
                 to="/our-story"
                 onClick={() => setMenuOpen(false)}
-                className="py-3 text-base font-medium text-gray-800 hover:text-pink-600 border-b border-gray-100 flex items-center justify-between"
+                className="min-h-[50px] flex items-center font-medium text-[17px] border-b border-[#eef0f3] hover:text-pink-600"
               >
                 Our Story
               </Link>
               <Link
                 to="/blog"
                 onClick={() => setMenuOpen(false)}
-                className="py-3 text-base font-medium text-gray-800 hover:text-pink-600 border-b border-gray-100 flex items-center justify-between"
+                className="min-h-[50px] flex items-center font-medium text-[17px] border-b border-[#eef0f3] hover:text-pink-600"
               >
                 Blog
               </Link>
               <a
                 href={isHome ? "#podcast" : "/#podcast"}
                 onClick={handlePodcastClick}
-                className="py-3 text-base font-medium text-gray-800 hover:text-pink-600 border-b border-gray-100 flex items-center justify-between"
+                className="min-h-[50px] flex items-center font-medium text-[17px] border-b border-[#eef0f3] hover:text-pink-600 cursor-pointer"
               >
                 Podcast
               </a>
               <Link
                 to="/share-story"
                 onClick={() => setMenuOpen(false)}
-                className="py-3 text-base font-medium text-gray-800 hover:text-pink-600 border-b border-gray-100 flex items-center justify-between"
+                className="min-h-[50px] flex items-center font-medium text-[17px] border-b border-[#eef0f3] hover:text-pink-600"
               >
                 Share Your Story
               </Link>

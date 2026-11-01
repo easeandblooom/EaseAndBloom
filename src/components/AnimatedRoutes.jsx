@@ -1,7 +1,6 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import HomePage from '../pages/HomePage';
-import WaitlistPage from '../pages/WaitlistPage';
 import BlogPosts from '../pages/BlogPosts';
 import BlogDetail from '../pages/BlogDetail';
 import AnonymousMessages from '../pages/AnonymousMessages';
@@ -19,11 +18,7 @@ const AnimatedRoutes = () => {
             <HomePage />
           </PageTransition>
         } />
-        <Route path="/waitlist" element={
-          <PageTransition>
-            <WaitlistPage />
-          </PageTransition>
-        } />
+        <Route path="/waitlist" element={<Navigate to="/" replace />} />
         <Route path="/blog" element={
           <PageTransition>
             <BlogPosts />
