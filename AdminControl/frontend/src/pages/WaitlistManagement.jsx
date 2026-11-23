@@ -4,7 +4,6 @@ import toast from 'react-hot-toast';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, ContentState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {
   UserPlus,
@@ -39,6 +38,7 @@ const WaitlistManagement = () => {
   useEffect(() => {
     fetchWaitlistData();
     fetchWaitlistStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- refetch only when these inputs change
   }, [currentPage, filterStatus, searchQuery]);
 
   const fetchWaitlistData = async () => {

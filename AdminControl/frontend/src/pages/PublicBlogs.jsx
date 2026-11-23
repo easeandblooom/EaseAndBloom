@@ -41,6 +41,7 @@ const PublicBlogs = () => {
 
   useEffect(() => {
     fetchBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- refetch only when these inputs change
   }, [currentPage, selectedCategory, sortBy]);
 
   const fetchBlogs = async () => {

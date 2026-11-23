@@ -15,6 +15,7 @@ const BlogDetail = () => {
 
   useEffect(() => {
     fetchBlog();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- refetch when the slug changes
   }, [slug]);
 
   const fetchBlog = async () => {

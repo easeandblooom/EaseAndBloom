@@ -107,7 +107,7 @@ const optionalAuthenticate = async (req, res, next) => {
     
     req.admin = admin;
     next();
-  } catch (error) {
+  } catch {
     // Token verification failed, continue without authentication
     req.admin = null;
     next();

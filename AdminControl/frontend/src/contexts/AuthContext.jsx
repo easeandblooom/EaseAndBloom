@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
             type: 'LOGIN_SUCCESS',
             payload: response.data.data.admin,
           });
-        } catch (error) {
+        } catch {
           // Token is invalid, clear storage
           localStorage.removeItem('accessToken');
           localStorage.removeItem('admin');
@@ -188,6 +188,7 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components -- hook lives beside its provider
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

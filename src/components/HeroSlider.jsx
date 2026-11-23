@@ -44,6 +44,7 @@ export default function HeroSlider() {
 		}, 10000)
 
 		return () => clearInterval(interval)
+		// eslint-disable-next-line react-hooks/exhaustive-deps -- restart the timer after each slide change
 	}, [currentSlide])
 
 	useEffect(() => {

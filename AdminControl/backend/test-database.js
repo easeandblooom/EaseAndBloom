@@ -35,7 +35,7 @@ const testDatabase = async () => {
     console.log('✅ Admin model created successfully');
     
     // Test Blog model
-    const testBlog = new Blog({
+    new Blog({
       title: 'Test Blog Post',
       content: 'This is a test blog post content.',
       author: 'Test Author',
@@ -50,7 +50,7 @@ const testDatabase = async () => {
     console.log('✅ Blog model created successfully');
     
     // Test Story model
-    const testStory = new Story({
+    new Story({
       title: 'Test Story',
       content: 'This is a test story content.',
       submitterName: 'Anonymous',
@@ -60,7 +60,7 @@ const testDatabase = async () => {
     console.log('✅ Story model created successfully');
     
     // Test RefreshToken model
-    const testRefreshToken = new RefreshToken({
+    new RefreshToken({
       token: 'test-refresh-token',
       adminId: testAdmin._id,
       expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
@@ -69,7 +69,7 @@ const testDatabase = async () => {
     console.log('✅ RefreshToken model created successfully');
     
     // Test PasswordResetToken model
-    const testPasswordResetToken = new PasswordResetToken({
+    new PasswordResetToken({
       adminId: testAdmin._id
     });
     

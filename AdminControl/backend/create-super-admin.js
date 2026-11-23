@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Admin = require('./models/Admin');
-const bcrypt = require('bcryptjs');
 const readline = require('readline');
 
 const rl = readline.createInterface({

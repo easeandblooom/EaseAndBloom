@@ -5,7 +5,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa6";
 import logo from "/E&BlogoPink.png";
 import { openCookieSettings } from "../lib/metaPixel";
-import { PRIVACY_POLICY_URL } from "../config/constants";
+import { PRIVACY_POLICY_URL, TERMS_URL } from "../config/constants";
 
 export default function Footer() {
   const location = useLocation();
@@ -161,7 +161,12 @@ export default function Footer() {
             >
               Privacy Policy
             </a>
-            <a href="#" className="hover:text-white transition-colors">
+            <a
+              href={TERMS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
               Terms of Service
             </a>
             <button
