@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa6";
 import logo from "/E&BlogoPink.png";
+import { openCookieSettings } from "../lib/metaPixel";
 
 export default function Footer() {
   const location = useLocation();
@@ -157,6 +158,13 @@ export default function Footer() {
             <a href="#" className="hover:text-white transition-colors">
               Terms of Service
             </a>
+            <button
+              type="button"
+              onClick={openCookieSettings}
+              className="hover:text-white transition-colors"
+            >
+              Cookie settings
+            </button>
           </div>
         </div>
       </div>

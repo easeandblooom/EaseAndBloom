@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import AnimatedRoutes from './components/AnimatedRoutes';
 import { useState, useEffect } from 'react';
 import LoadingScreen from './components/LoadingScreen';
+import CookieConsent from './components/CookieConsent';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -21,6 +22,7 @@ function App() {
     <Router>
       <div className="App">
         <AnimatedRoutes />
+        <CookieConsent />
         
         {/* Toast notifications */}
         <Toaster

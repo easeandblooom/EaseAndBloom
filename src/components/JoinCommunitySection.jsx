@@ -2,7 +2,7 @@
 
 import React from "react"
 import { ArrowRight } from "lucide-react"
-import { WEB_APP_URL } from "../config/constants"
+import { appLinkHref, onAppLinkClick } from "../lib/appLink";
 
 export default function JoinCommunitySection() {
   return (
@@ -26,7 +26,8 @@ export default function JoinCommunitySection() {
 
             <div className="flex justify-center">
               <a
-                href={WEB_APP_URL}
+                href={appLinkHref()}
+                onClick={onAppLinkClick}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-10 py-3.5 rounded-full font-semibold text-gray-900 bg-white hover:bg-gray-100 hover:shadow-xl transition-all duration-300 hover:scale-105 text-base"

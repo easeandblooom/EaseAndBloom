@@ -7,7 +7,7 @@ import StoryCard from '../components/StoryCard';
 import StoriesGridCarousel from '../components/StoriesGridCarousel';
 import StoryDetailModal from '../components/StoryDetailModal';
 import story from '/story.JPG';
-import { WEB_APP_URL } from '../config/constants';
+import { appLinkHref, onAppLinkClick } from '../lib/appLink';
 
 const OurStory = () => {
   const sectionRef = useRef(null);
@@ -131,7 +131,8 @@ This is our soft place to land. Our circle of care. Our community of truth-telli
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href={WEB_APP_URL}
+                href={appLinkHref()}
+                onClick={onAppLinkClick}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-center"

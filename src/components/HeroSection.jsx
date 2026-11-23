@@ -1,5 +1,5 @@
 import React from "react";
-import { WEB_APP_URL } from "../config/constants";
+import { appLinkHref, onAppLinkClick } from "../lib/appLink";
 
 export default function HeroSection() {
   const scrollToPodcast = (e) => {
@@ -61,7 +61,8 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             {/* Join Our Community Button */}
             <a
-              href={WEB_APP_URL}
+              href={appLinkHref()}
+              onClick={onAppLinkClick}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 py-3 rounded-full font-semibold text-[#0f172a] bg-white hover:bg-white/90 shadow-xl transition-all duration-200 hover:-translate-y-0.5 text-[15px] text-center"
