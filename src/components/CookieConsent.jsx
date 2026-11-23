@@ -8,6 +8,7 @@ import {
   setConsent,
   trackPageView,
 } from "../lib/metaPixel";
+import { PRIVACY_POLICY_URL } from "../config/constants";
 
 // Cookie banner + consent-gated Meta Pixel loader. Must render inside the router.
 export default function CookieConsent() {
@@ -59,7 +60,15 @@ export default function CookieConsent() {
           If you allow it, Meta&apos;s pixel records which pages of this site you view and whether you
           click through to join the community, so we can tell which adverts work. It doesn&apos;t
           collect anything you type here. Say no and nothing from Meta loads. You can change your mind any time
-          with &ldquo;Cookie settings&rdquo; at the bottom of every page.
+          with &ldquo;Cookie settings&rdquo; at the bottom of every page.{" "}
+          <a
+            href={PRIVACY_POLICY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-pink-600 underline underline-offset-2 hover:text-pink-700"
+          >
+            Privacy Policy
+          </a>
         </p>
       ) : (
         <button

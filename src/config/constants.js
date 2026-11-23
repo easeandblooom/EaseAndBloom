@@ -1,5 +1,6 @@
 // Configurable external links for the Ease & Bloom website
 export const WEB_APP_URL = import.meta.env.VITE_WEB_APP_URL || "https://app.easeandbloom.org";
+export const PRIVACY_POLICY_URL = `${WEB_APP_URL.replace(/\/$/, "")}/privacy`;
 
 export const PODCAST_LINKS = {
   spotify: "https://open.spotify.com/show/77odHw77nUbir723tANWna?si=740d7ccc46a34785",
