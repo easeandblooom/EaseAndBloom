@@ -24,6 +24,7 @@ const BlogsSection = () => {
 
   useEffect(() => {
     fetchBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fetch once on mount
   }, []);
 
   const fetchBlogs = async () => {

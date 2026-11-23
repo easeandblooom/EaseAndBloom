@@ -24,7 +24,7 @@ const generateRefreshToken = () => {
 const verifyAccessToken = (token) => {
   try {
     return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-  } catch (error) {
+  } catch {
     throw new Error('Invalid or expired access token');
   }
 };
@@ -33,7 +33,7 @@ const verifyAccessToken = (token) => {
 const verifyRefreshToken = (token) => {
   try {
     return jwt.verify(token, process.env.JWT_REFRESH_SECRET);
-  } catch (error) {
+  } catch {
     throw new Error('Invalid or expired refresh token');
   }
 };
@@ -53,7 +53,7 @@ const storeRefreshToken = async (adminId, token) => {
     
     await refreshToken.save();
     return refreshToken;
-  } catch (error) {
+  } catch {
     throw new Error('Failed to store refresh token');
   }
 };
@@ -62,7 +62,7 @@ const storeRefreshToken = async (adminId, token) => {
 const removeRefreshToken = async (token) => {
   try {
     await RefreshToken.deleteOne({ token });
-  } catch (error) {
+  } catch {
     throw new Error('Failed to remove refresh token');
   }
 };

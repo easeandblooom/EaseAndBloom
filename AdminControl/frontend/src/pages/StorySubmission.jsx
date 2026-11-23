@@ -7,7 +7,6 @@ import {
   FileText,
   Tag,
 } from 'lucide-react';
-import { validatePassword } from '../utils/helpers';
 import toast from 'react-hot-toast';
 
 const StorySubmission = () => {

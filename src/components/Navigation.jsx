@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "/E&BlogoPink.png";
-import { WEB_APP_URL } from "../config/constants";
+import { appLinkHref, onAppLinkClick } from "../lib/appLink";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -129,7 +129,8 @@ export default function Navigation() {
 
           {/* Desktop Join Our Community Button (Hidden under 980px) */}
           <a
-            href={WEB_APP_URL}
+            href={appLinkHref()}
+            onClick={onAppLinkClick}
             target="_blank"
             rel="noopener noreferrer"
             className={`hidden min-[981px]:inline-flex items-center justify-center min-h-[42px] px-5 py-2 rounded-full text-[14px] font-semibold transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md ${
@@ -198,10 +199,10 @@ export default function Navigation() {
               </Link>
               <div className="pt-4 pb-2">
                 <a
-                  href={WEB_APP_URL}
+                  href={appLinkHref()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={() => { onAppLinkClick(); setMenuOpen(false); }}
                   className="w-full min-h-[46px] inline-flex items-center justify-center px-6 py-3 rounded-full text-base font-semibold bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md hover:shadow-lg transition-all"
                 >
                   Join Our Community

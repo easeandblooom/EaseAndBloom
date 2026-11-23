@@ -211,7 +211,7 @@ router.post('/send-notification', auth, [
       });
     }
 
-    const { recipients, subject, htmlContent, template = 'custom' } = req.body;
+    const { recipients, subject, htmlContent } = req.body;
 
     // Get recipient details
     const waitlistEntries = await Waitlist.find({

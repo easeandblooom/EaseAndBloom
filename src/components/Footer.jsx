@@ -4,6 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa6";
 import logo from "/E&BlogoPink.png";
+import { openCookieSettings } from "../lib/metaPixel";
+import { PRIVACY_POLICY_URL, TERMS_URL } from "../config/constants";
 
 export default function Footer() {
   const location = useLocation();
@@ -151,12 +153,29 @@ export default function Footer() {
         <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs sm:text-sm text-slate-400">
           <p>© 2026 Ease &amp; Bloom. A safe space for women's health and empowerment.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">
+            <a
+              href={PRIVACY_POLICY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
               Privacy Policy
             </a>
-            <a href="#" className="hover:text-white transition-colors">
+            <a
+              href={TERMS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
               Terms of Service
             </a>
+            <button
+              type="button"
+              onClick={openCookieSettings}
+              className="hover:text-white transition-colors"
+            >
+              Cookie settings
+            </button>
           </div>
         </div>
       </div>

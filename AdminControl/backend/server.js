@@ -73,6 +73,8 @@ app.get('/api/health', (req, res) => {
 });
 
 // Error handling middleware
+// Express needs all four arguments to treat this as error middleware.
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error(err.stack);
   
